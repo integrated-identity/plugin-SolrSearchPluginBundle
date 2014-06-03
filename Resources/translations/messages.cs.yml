@@ -7,4 +7,4 @@ plugin:
         solr_core: null
         solr_core_read: null
         solr_core_item: null
-        response_false: null
+        response_false: 'Neúspěšná odezva.'
