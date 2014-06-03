@@ -1,9 +1,9 @@
-Plugins: null
+Plugins: Plug-iny
 plugin:
     name: null
     error:
         config: null
-        curl: null
+        curl: 'Neproběhlo propojení do Solr serveru. Zkontrolujte vaši konfiguraci.'
         solr_core: null
         solr_core_read: null
         solr_core_item: null
