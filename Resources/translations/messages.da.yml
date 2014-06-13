@@ -1,10 +1,10 @@
-Plugins: null
+Plugins: Plugins
 plugin:
-    name: null
+    name: SolrSearchPluginBundle
     error:
-        config: null
-        curl: null
-        solr_core: null
-        solr_core_read: null
-        solr_core_item: null
-        response_false: null
+        config: 'Ingen gyldig opsætning. Læs readme for denne plugin.'
+        curl: 'Ingen forbindelse til Solr serveren. Kontroller indstillingerne.'
+        solr_core: 'Problem med Solr core. Kontroller indstillingerne.'
+        solr_core_read: 'Solr core navne kunne ikke findes.'
+        solr_core_item: 'Det returnerede elements core værdi er ikke en gyldig Solr core.'
+        response_false: 'Mislykket svar.'
