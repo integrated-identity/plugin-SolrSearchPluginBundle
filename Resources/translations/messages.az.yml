@@ -1,10 +1,10 @@
-Plugins: null
+Plugins: Plaqinlər
 plugin:
-    name: null
+    name: SolrAxtarışPlaqinDüyünü
     error:
-        config: null
-        curl: null
-        solr_core: null
-        solr_core_read: null
-        solr_core_item: null
-        response_false: null
+        config: 'Uyğun konfiqurasiyanı oxuya və ya tapa bilmədik. Bu plaqinin kitabçasını yoxla.'
+        curl: 'Solr şəbəkəsi ilə əlaqə yaradıla bilmədi. Konfiqurasiyanı yoxla.'
+        solr_core: 'Solr kökü müəyyənləşdirilmədi. Konfiqurasiyanı yoxla.'
+        solr_core_read: 'Solr-dan əsas adların arxivləşməsini bağla.'
+        solr_core_item: 'Element üçün qaytarılmış əsas dəyər düzgün Solr əsası deyil.'
+        response_false: 'Uğursuz cavab.'
