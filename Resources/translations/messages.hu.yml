@@ -3,8 +3,8 @@ plugin:
     name: SolrKeresőBővítményCsomag
     error:
         config: 'Nem olvasható vagy nem található megfelelő konfiguráció. Nézz utána a bővítmény olvassel fájljában. '
-        curl: null
-        solr_core: null
-        solr_core_read: null
-        solr_core_item: null
-        response_false: null
+        curl: 'Nem lehet kapcsolatot létesíteni a Solr-kiszolgálóval. Ellenőrizd a beállításokat.'
+        solr_core: 'Nem lehet meghatározni a solr magot. Ellenőrizd a beállításokat.'
+        solr_core_read: 'Nem kérhetők le magneveket a Solrből.'
+        solr_core_item: 'Az elem visszaadott magértéke nem érvényes Solr-mag.'
+        response_false: 'Sikertelen válasz.'
