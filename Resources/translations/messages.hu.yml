@@ -1,8 +1,8 @@
-Plugins: null
+Plugins: Bővítmények
 plugin:
-    name: null
+    name: SolrKeresőBővítményCsomag
     error:
-        config: null
+        config: 'Nem olvasható vagy nem található megfelelő konfiguráció. Nézz utána a bővítmény olvassel fájljában. '
         curl: null
         solr_core: null
         solr_core_read: null
