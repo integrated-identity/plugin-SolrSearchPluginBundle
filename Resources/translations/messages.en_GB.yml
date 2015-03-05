@@ -7,58 +7,58 @@ plugin:
         solr_core: 'Could not determine Solr core. Check your configuration.'
         solr_core_read: 'Unable to retrieve core names from Solr.'
         solr_core_item: 'Returned core value for item is not a valid Solr core.'
-        server_error: null
-        response_false: null
+        server_error: 'An error occured at the search service.'
+        response_false: 'Invalid response returned by search service.'
     solr:
-        pagetitle: null
-        solr: null
+        pagetitle: 'Solr Plugin'
+        solr: Solr
         menu:
-            main: null
-            settings: null
-            status: null
+            main: 'Solr plugin'
+            settings: Settings
+            status: Status
         admin:
             tabs:
-                status: null
-                settings: null
-                readme: null
+                status: Status
+                settings: Settings
+                readme: 'View plugin readme'
             button:
-                viewraw: null
+                viewraw: 'View raw response body'
             table:
-                name: null
-                lastModified: null
-                numDocs: null
-                version: null
-                uptime: null
-                size: null
+                name: 'Core name'
+                lastModified: 'Last modified'
+                numDocs: 'Number of documents'
+                version: Version
+                uptime: Uptime
+                size: Size
             form:
                 label:
-                    enabled: null
-                    index_type: null
-                    index_only: null
-                    index_and_data: null
-                    host: null
-                    port: null
-                    default_core: null
-                    query_uri: null
-                    update_uri: null
-                    indexables: null
+                    enabled: 'Enable Solr indexing'
+                    index_type: 'Type of indexing'
+                    index_only: 'Only index data'
+                    index_and_data: 'Index and store data'
+                    host: Host
+                    port: Port
+                    default_core: 'Default core'
+                    query_uri: 'Query URI'
+                    update_uri: 'Update URI'
+                    indexables: 'Indexable content types'
                     indexable_item:
-                        indexer_article: null
-                        indexer_comment: null
-                        indexer_user: null
-                    article_types: null
-                    cron_interval: null
-                    cron_custom: null
-                    save: null
+                        indexer_article: Articles
+                        indexer_comment: Comments
+                        indexer_user: Users
+                    article_types: 'Article Types'
+                    cron_interval: 'Run interval'
+                    cron_custom: 'Custom CRON expression'
+                    save: Save
                 help_text:
-                    index_type: null
-                    port: null
-                    default_core: null
-                    cron_interval: null
-                    cron_custom: null
+                    index_type: 'Check the <a href="https://github.com/newscoop/plugin-SolrSearchPluginBundle/blob/master/README.md" target="_blank">readme</a> for more detailed information.'
+                    port: 'Once the field <em>host</em> and <em>port</em> are filled, the connection with Solr will automatically be tested.'
+                    default_core: 'This field isn''t related to the attribute <em>defaultCoreName</em> in the solr.xml configuration file.'
+                    cron_interval: 'This changes the Newscoop-wide Indexer job.'
+                    cron_custom: '<a href="http://en.wikipedia.org/wiki/Cron#CRON_expression" target="_blank">Read more</a> about CRON expressions.'
                 status:
-                    success: null
+                    success: 'The settings are saved.'
         permissions:
-            label: null
-            settings: null
-            status: null
+            label: 'Solr Plugin'
+            settings: Settings
+            status: Status
