@@ -7,58 +7,58 @@ plugin:
         solr_core: 'Problem med Solr core. Kontroller indstillingerne.'
         solr_core_read: 'Solr core navne kunne ikke findes.'
         solr_core_item: 'Det returnerede elements core værdi er ikke en gyldig Solr core.'
-        server_error: null
-        response_false: null
+        server_error: 'Der skete en fejl i søgetjenesten.'
+        response_false: 'Ugyldigt svar fra søgetjenesten.'
     solr:
-        pagetitle: null
-        solr: null
+        pagetitle: 'Solr plugin'
+        solr: Solr
         menu:
-            main: null
-            settings: null
-            status: null
+            main: 'Solr plugin'
+            settings: Indstillinger
+            status: Status
         admin:
             tabs:
-                status: null
-                settings: null
+                status: Status
+                settings: Indstillinger
                 readme: null
             button:
                 viewraw: null
             table:
-                name: null
-                lastModified: null
-                numDocs: null
-                version: null
-                uptime: null
-                size: null
+                name: 'Kerne navn'
+                lastModified: 'Sidst ændret'
+                numDocs: 'Antal dokumenter'
+                version: Version
+                uptime: Oppetid
+                size: Størrelse
             form:
                 label:
-                    enabled: null
-                    index_type: null
+                    enabled: 'Slå Solr indeksering til'
+                    index_type: Indekseringstype
                     index_only: null
                     index_and_data: null
-                    host: null
-                    port: null
-                    default_core: null
+                    host: Vært
+                    port: Port
+                    default_core: 'Standard kerne'
                     query_uri: null
                     update_uri: null
-                    indexables: null
+                    indexables: 'Indekserbare indholdstyper'
                     indexable_item:
-                        indexer_article: null
-                        indexer_comment: null
-                        indexer_user: null
-                    article_types: null
+                        indexer_article: Artikler
+                        indexer_comment: Kommentarer
+                        indexer_user: Brugere
+                    article_types: 'Artikel typer'
                     cron_interval: null
                     cron_custom: null
-                    save: null
+                    save: Gem
                 help_text:
                     index_type: null
-                    port: null
+                    port: 'Når felterne <em>vært</em> og <em>port</em> er udfyldt bliver forbindelsen til Solr automatisk testet.'
                     default_core: null
                     cron_interval: null
                     cron_custom: null
                 status:
-                    success: null
+                    success: 'Indstillingerne blev gemt.'
         permissions:
-            label: null
-            settings: null
-            status: null
+            label: 'Solr plugin'
+            settings: Indstillinger
+            status: Status
