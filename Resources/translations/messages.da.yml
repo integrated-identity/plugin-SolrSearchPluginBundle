@@ -53,7 +53,7 @@ plugin:
                 help_text:
                     index_type: null
                     port: 'Når felterne <em>vært</em> og <em>port</em> er udfyldt bliver forbindelsen til Solr automatisk testet.'
-                    default_core: null
+                    default_core: 'Dette felt er ikke relateret til <em>defaultCoreName</em> i solr.xml konfigurationsfilen.'
                     cron_interval: null
                     cron_custom: null
                 status:
