@@ -20,9 +20,9 @@ plugin:
             tabs:
                 status: Status
                 settings: Indstillinger
-                readme: null
+                readme: 'Se plugin readme'
             button:
-                viewraw: null
+                viewraw: 'Se uformateret svar tekst'
             table:
                 name: 'Kerne navn'
                 lastModified: 'Sidst ændret'
@@ -39,8 +39,8 @@ plugin:
                     host: Vært
                     port: Port
                     default_core: 'Standard kerne'
-                    query_uri: null
-                    update_uri: null
+                    query_uri: 'Forespørgsels uri'
+                    update_uri: 'Opdater uri'
                     indexables: 'Indekserbare indholdstyper'
                     indexable_item:
                         indexer_article: Artikler
@@ -48,14 +48,14 @@ plugin:
                         indexer_user: Brugere
                     article_types: 'Artikel typer'
                     cron_interval: Kørselsinterval
-                    cron_custom: null
+                    cron_custom: 'CRON kommando'
                     save: Gem
                 help_text:
-                    index_type: null
+                    index_type: 'Se detaljeret information i <a href="https://github.com/newscoop/plugin-SolrSearchPluginBundle/blob/master/README.md" target="_blank">readme</a>.'
                     port: 'Når felterne <em>vært</em> og <em>port</em> er udfyldt bliver forbindelsen til Solr automatisk testet.'
                     default_core: 'Dette felt er ikke relateret til <em>defaultCoreName</em> i solr.xml konfigurationsfilen.'
-                    cron_interval: null
-                    cron_custom: null
+                    cron_interval: 'Dette ændrer indeksering for hele Newscoop.'
+                    cron_custom: '<a href="http://en.wikipedia.org/wiki/Cron#CRON_expression" target="_blank">Læs mere</a> om CRON kommandoer.'
                 status:
                     success: 'Indstillingerne blev gemt.'
         permissions:
