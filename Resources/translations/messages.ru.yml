@@ -1,4 +1,4 @@
-Plugins: null
+Plugins: Плагины
 plugin:
     name: null
     error:
@@ -14,22 +14,22 @@ plugin:
         solr: null
         menu:
             main: null
-            settings: null
-            status: null
+            settings: Настройки
+            status: Состояние
         admin:
             tabs:
-                status: null
-                settings: null
+                status: Состояние
+                settings: Настройки
                 readme: null
             button:
                 viewraw: null
             table:
                 name: null
-                lastModified: null
+                lastModified: 'Последние изменения'
                 numDocs: null
-                version: null
+                version: Версия
                 uptime: null
-                size: null
+                size: Размер
             form:
                 label:
                     enabled: null
@@ -43,13 +43,13 @@ plugin:
                     update_uri: null
                     indexables: null
                     indexable_item:
-                        indexer_article: null
-                        indexer_comment: null
-                        indexer_user: null
-                    article_types: null
+                        indexer_article: Статьи
+                        indexer_comment: Комментарии
+                        indexer_user: Пользователи
+                    article_types: 'Тип статьи'
                     cron_interval: null
                     cron_custom: null
-                    save: null
+                    save: Сохранить
                 help_text:
                     index_type: null
                     port: null
@@ -60,5 +60,5 @@ plugin:
                     success: null
         permissions:
             label: null
-            settings: null
-            status: null
+            settings: Настройки
+            status: Состояние
