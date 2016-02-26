@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Translation\Translator;
-use Newscoop\Topic\TopicService;
+use Newscoop\NewscoopBundle\Services\TopicService;
 use Newscoop\SolrSearchPluginBundle\Exception\SolrException;
 use Newscoop\SolrSearchPluginBundle\Search\SolrQuery;
 use Newscoop\SolrSearchPluginBundle\Services\SolrHelperService;
@@ -55,7 +55,7 @@ class SolrQueryService
     private $em;
 
     /**
-     * @var Newscoop\Topic\TopicService
+     * @var Newscoop\NewscoopBundle\Services\TopicService
      */
     private $topicService;
 
@@ -192,7 +192,7 @@ class SolrQueryService
             $decoded['responseHeader']['params']['q_topic'] = null;
 
             if ($this->request->get('q') !== '') {
-                $topic = $this->topicService->getTopicByIdOrName($this->request->get('q'), 5);
+                $topic = $this->topicService->getTopicByFullName(sprintf('%s:de', $this->request->get('q')));
                 if ($topic !== null) {
                     $decoded['responseHeader']['params']['q_topic'] = $topic->getName();
                 }
