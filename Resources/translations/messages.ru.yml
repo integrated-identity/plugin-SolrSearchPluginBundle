@@ -39,6 +39,7 @@ plugin:
                     host: null
                     port: null
                     default_core: null
+                    suffix_uri: null
                     query_uri: null
                     update_uri: null
                     indexables: null
@@ -53,6 +54,7 @@ plugin:
                 help_text:
                     index_type: null
                     port: null
+                    suffix_uri: null
                     default_core: null
                     cron_interval: null
                     cron_custom: null
