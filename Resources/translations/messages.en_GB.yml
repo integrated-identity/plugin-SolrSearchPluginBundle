@@ -39,7 +39,7 @@ plugin:
                     host: Host
                     port: Port
                     default_core: 'Default core'
-                    suffix_uri: null
+                    suffix_uri: 'Suffix URI'
                     query_uri: 'Query URI'
                     update_uri: 'Update URI'
                     indexables: 'Indexable content types'
@@ -53,8 +53,8 @@ plugin:
                     save: Save
                 help_text:
                     index_type: 'Check the <a href="https://github.com/newscoop/plugin-SolrSearchPluginBundle/blob/master/README.md" target="_blank">readme</a> for more detailed information.'
-                    port: null
-                    suffix_uri: null
+                    port: 'Once the fields <em>host</em>, <em>port</em> and <em>suffix URI</em> are filled, the connection with Solr will automatically be tested.'
+                    suffix_uri: 'The first part of the URI after the hostname and port. By default the value is <em>solr</em>, but please verify with your Solr installation.'
                     default_core: 'This field isn''t related to the attribute <em>defaultCoreName</em> in the solr.xml configuration file.'
                     cron_interval: 'This changes the Newscoop-wide Indexer job.'
                     cron_custom: '<a href="http://en.wikipedia.org/wiki/Cron#CRON_expression" target="_blank">Read more</a> about CRON expressions.'
