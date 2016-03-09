@@ -1,23 +1,17 @@
 <?php
 /**
- * @package   Newscoop\SolrSearchPluginBundle
  * @author    Mischa Gorinskat <mischa.gorinskat@sourcefabric.org>
  * @copyright 2014 Sourcefabric o.p.s.
  * @license   http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\SolrSearchPluginBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Newscoop\Http\Client;
-use Newscoop\NewscoopException;
 use Newscoop\SolrSearchPluginBundle\Search\SolrQuery;
-use Newscoop\SolrSearchPluginBundle\Services\SolrHelperService;
 
 class SearchController extends Controller
 {
@@ -29,44 +23,36 @@ class SearchController extends Controller
         $helper = $this->get('newscoop_solrsearch_plugin.helper');
         $parameters = $request->query->all();
 
-        if ($helper->getConfigValue('index_type') == SolrHelperService::INDEX_AND_DATA) {
+        $searchParam = trim($request->query->get('q'));
+        // Check for webcode and redirect
+        if (substr($searchParam, 0, 1) === '+' && $this->container->get('webcode')->findArticleByWebcode(substr($searchParam, 1)) !== null) {
+            return $this->redirect(
+                sprintf('/%s', $searchParam), 302
+            );
+        }
 
-            $searchParam = trim($request->query->get('q'));
+        if (array_key_exists('q', $parameters) && $parameters['q'] === '') {
+            $solrResponseBody = array();
+        } else {
+            $solrQuery = $this->encodeParameters($parameters, $language);
+            $queryService = $this->container->get('newscoop_solrsearch_plugin.query_service');
 
-            // Check for webcode and redirect
-            if (substr($searchParam, 0, 1) === '+' && $this->container->get('webcode')->findArticleByWebcode(substr($searchParam, 1)) !== null) {
-                return $this->redirect(
-                    sprintf('/%s', $searchParam), 302
-                );
-            }
+            try {
+                $solrResponseBody = $queryService->find($solrQuery);
+            } catch (\Exception $e) {
+                $request->query->set('error', $e->getMessage());
 
-            if (array_key_exists('q', $parameters) && $parameters['q'] === '') {
-
-                $solrResponseBody = array();
-            } else {
-
-                $solrQuery = $this->encodeParameters($parameters, $language);
-                $queryService = $this->container->get('newscoop_solrsearch_plugin.query_service');
-
-                try {
-                    $solrResponseBody = $queryService->find($solrQuery);
-                } catch(\Exception $e) {
-                    $request->query->set('error', $e->getMessage());
-
-                    $response = $this->forward('NewscoopSolrSearchPluginBundle:Error:search', array(
-                        'request' => $request
+                $response = $this->forward('NewscoopSolrSearchPluginBundle:Error:search', array(
+                        'request' => $request,
                     ));
 
-                    return $response;
-                }
+                return $response;
             }
         }
 
         if (array_key_exists('format', $parameters) && $parameters['format'] == 'json') {
-
             $response = new JsonResponse($solrResponseBody);
         } else {
-
             $templatesService = $this->container->get('newscoop.templates.service');
             $smarty = $templatesService->getSmarty();
 
@@ -83,7 +69,7 @@ class SearchController extends Controller
     }
 
     /**
-     * Build solr params array
+     * Build solr params array.
      *
      * @return array
      */
@@ -135,7 +121,7 @@ class SearchController extends Controller
     }
 
     /**
-     * Build solr query
+     * Build solr query.
      *
      * @return string
      */
@@ -152,23 +138,22 @@ class SearchController extends Controller
     }
 
     /**
-     * Build solr source filter
+     * Build solr source filter.
      *
      * @return string
      */
     private function buildSolrTypeParam($parameters)
     {
         $queryService = $this->get('newscoop_solrsearch_plugin.query_service');
-        $typesConfig = $this->container->getParameter('types_search');
+        $helper = $this->container->get('newscoop_solrsearch_plugin.helper');
+        $config = $helper->getConfigValues(true);
+        $typesConfig = $config['indexer_article_types'];
         $type = (array_key_exists('type', $parameters)) ? $parameters['type'] : null;
-
-        if (!empty($type) && array_key_exists($type, $typesConfig)) {
-            $types = (array) $typesConfig[$type];
+        $types = array();
+        if (is_string($type) && in_array($type, $typesConfig)) {
+            $types[] = $type;
         } else {
-            $types = array();
-            foreach ($typesConfig as $typeConfig) {
-                $types = array_merge($types, (array) $typeConfig);
-            }
+            $types = array_intersect((array) $type, $typesConfig);
         }
 
         return $queryService->buildSolrSingleValueParam('type', array_unique($types));

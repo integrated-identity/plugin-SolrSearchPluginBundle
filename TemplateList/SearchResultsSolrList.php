@@ -1,21 +1,16 @@
 <?php
 /**
- * @package Newscoop\SolrSearchPluginBundle
  * @author Mischa Gorinskat <mischa.gorinskat@sourcefabric.org>
  * @copyright 2015 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\SolrSearchPluginBundle\TemplateList;
 
-use Newscoop\ListResult;
 use Newscoop\TemplateList\PaginatedBaseList;
 use Newscoop\SolrSearchPluginBundle\Search\SolrQuery;
-use Newscoop\SolrSearchPluginBundle\TemplateList\SearchResultsSolrCriteria;
-use Newscoop\SolrSearchPluginBundle\TemplateList\SolrResult;
 
 /**
- * SolrSearchPluginBundle List
+ * SolrSearchPluginBundle List.
  */
 class SearchResultsSolrList extends PaginatedBaseList
 {
@@ -26,9 +21,12 @@ class SearchResultsSolrList extends PaginatedBaseList
 
         $language = $em->getRepository('Newscoop\Entity\Language')
             ->findOneByCode($parameters['language']);
-        if ($language instanceof \Newscoop\Entity\Language) {
-            $criteria->core = $language->getRFC3066bis();
+        if (!$language instanceof \Newscoop\Entity\Language) {
+            throw new \Exception('"language" parameter for "list_search_results_solr" list is not set! 
+                Either set it or configure Solr to store "language_id"');
         }
+
+        $criteria->core = $language->getRFC3066bis();
 
         try {
             $result = $service->find($this->convertCriteriaToQuery($criteria));
@@ -39,15 +37,14 @@ class SearchResultsSolrList extends PaginatedBaseList
 
         $docs = array();
         $list = null;
+        $helper = \Zend_Registry::get('container')->get('newscoop_solrsearch_plugin.helper');
+        $allTypes = $helper->getTypes();
         if (is_array($result) && array_key_exists('response', $result) && array_key_exists('docs', $result['response'])) {
-
             $userRepo = $em->getRepository('Newscoop\Entity\User');
 
-            $docs = array_map(function ($doc) use ($userRepo) {
+            $docs = array_map(function ($doc) use ($userRepo, $language, $allTypes) {
                 $type = '';
                 $object = null;
-
-                // TODO: Implement way to handle other indexable types
                 switch ($doc['type']) {
                     case 'comment':
                         $type = $doc['type'];
@@ -60,10 +57,12 @@ class SearchResultsSolrList extends PaginatedBaseList
                             $object = new \MetaUser($user);
                         }
                         break;
-                    case 'article':
                     default:
-                        $type = 'article';
-                        $object = new \MetaArticle($doc['language_id'], $doc['number']);
+                        if (in_array($doc['type'], $allTypes)) {
+                            $type = 'article';
+                            $object = new \MetaArticle($doc['language_id'] ?: $language->getId(), $doc['number']);
+                        }
+
                         break;
                 }
 
@@ -86,16 +85,15 @@ class SearchResultsSolrList extends PaginatedBaseList
     }
 
     /**
-     * Convert parameters array to Criteria
+     * Convert parameters array to Criteria.
      *
-     * @param integer $firstResult
-     * @param array   $parameters
+     * @param int   $firstResult
+     * @param array $parameters
      *
      * @return Criteria
      */
     protected function convertParameters($firstResult, $parameters)
     {
-
         if (array_key_exists('rows', $parameters)) {
             $this->criteria->maxResults = $parameters['rows'];
         }
@@ -116,9 +114,9 @@ class SearchResultsSolrList extends PaginatedBaseList
     }
 
     /**
-     * Converts a SearchResultsSolrCriteria object to a SolrQuer object
+     * Converts a SearchResultsSolrCriteria object to a SolrQuer object.
      *
-     * @param  SearchResultsSolrCriteria $criteria
+     * @param SearchResultsSolrCriteria $criteria
      *
      * @return SolrQuery
      */
