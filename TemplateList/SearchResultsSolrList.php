@@ -18,7 +18,6 @@ class SearchResultsSolrList extends PaginatedBaseList
     {
         $service = \Zend_Registry::get('container')->get('newscoop_solrsearch_plugin.query_service');
         $em = \Zend_Registry::get('container')->get('em');
-
         $language = $em->getRepository('Newscoop\Entity\Language')
             ->findOneByCode($parameters['language']);
         if (!$language instanceof \Newscoop\Entity\Language) {
@@ -27,7 +26,6 @@ class SearchResultsSolrList extends PaginatedBaseList
         }
 
         $criteria->core = $language->getRFC3066bis();
-
         try {
             $result = $service->find($this->convertCriteriaToQuery($criteria));
         } catch (\Exception $e) {
@@ -40,9 +38,7 @@ class SearchResultsSolrList extends PaginatedBaseList
         $helper = \Zend_Registry::get('container')->get('newscoop_solrsearch_plugin.helper');
         $allTypes = $helper->getTypes();
         if (is_array($result) && array_key_exists('response', $result) && array_key_exists('docs', $result['response'])) {
-            $userRepo = $em->getRepository('Newscoop\Entity\User');
-
-            $docs = array_map(function ($doc) use ($userRepo, $language, $allTypes) {
+            $docs = array_map(function ($doc) use ($language, $allTypes, $em) {
                 $type = '';
                 $object = null;
                 switch ($doc['type']) {
@@ -52,7 +48,7 @@ class SearchResultsSolrList extends PaginatedBaseList
                         break;
                     case 'user':
                         $type = $doc['type'];
-                        $user = $userRepo->findOneById($doc['number']);
+                        $user = $em->getReference('Newscoop\Entity\User', $doc['number']);
                         if ($user instanceof \Newscoop\Entity\User) {
                             $object = new \MetaUser($user);
                         }
