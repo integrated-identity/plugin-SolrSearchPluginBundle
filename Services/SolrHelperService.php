@@ -230,9 +230,10 @@ class SolrHelperService
         $indexables = $this->getIndexables();
         $subTypes = array();
         $removeIndexables = array();
+        $that = $this;
 
-        array_walk($indexables, function ($value, $key) use (&$subTypes, &$removeIndexables) {
-            $type = $this->getConfigValue(str_replace('.', '_', $value).'_types', null);
+        array_walk($indexables, function ($value, $key) use (&$subTypes, &$removeIndexables, $that) {
+            $type = $that->getConfigValue(str_replace('.', '_', $value).'_types', null);
             if (is_array($type)) {
                 $subTypes = array_merge($subTypes, $type);
                 $removeIndexables[] = $value;
