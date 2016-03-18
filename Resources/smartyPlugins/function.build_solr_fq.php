@@ -28,7 +28,7 @@ function smarty_function_build_solr_fq($p_params = array(), &$p_smarty)
     $solrFq = '';
 
     // The $p_params override the $_GET
-    $acceptedParams = array('type', 'published', 'from', 'to', 'dateformat');
+    $acceptedParams = array('type', 'published', 'from', 'to', 'dateformat', 'section_number');
     $cleanParam = array();
 
     foreach ($acceptedParams as $key) {
@@ -106,6 +106,18 @@ function smarty_function_build_solr_fq($p_params = array(), &$p_smarty)
         }
 
         $solrFq .= 'published:' . $published;
+    }
+
+    if (array_key_exists('section_number', $cleanParam) && !empty($cleanParam['section_number'])) {
+        if (!is_array($cleanParam['section_number'])) {
+            $cleanParam['section_number'] = array(trim($cleanParam['section_number'], '()'));
+        }
+
+        if (!empty($solrFq)) {
+            $solrFq .= ' AND ';
+        }
+
+        $solrFq .= sprintf('section_number:(%s)', implode(' OR ', $cleanParam['section_number']));
     }
 
     return $solrFq;

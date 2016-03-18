@@ -1,35 +1,30 @@
 <?php
 /**
- * @package   Newscoop\SolrSearchPluginBundle
  * @author    Mischa Gorinskat <mischa.gorinskat@sourcefabric.org>
  * @copyright 2014 Sourcefabric o.p.s.
  * @license   http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\SolrSearchPluginBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Translation\Translator;
 use Newscoop\NewscoopBundle\Services\TopicService;
 use Newscoop\SolrSearchPluginBundle\Exception\SolrException;
 use Newscoop\SolrSearchPluginBundle\Search\SolrQuery;
-use Newscoop\SolrSearchPluginBundle\Services\SolrHelperService;
 use Exception;
 use DateTime;
 
 /**
- * Configuration service for article type
+ * Configuration service for article type.
  */
 class SolrQueryService
 {
     const LIMIT = 12;
 
-    /**
-     * @var array
-     */
+/**
+ * @var array
+ */
     // TODO: Make this configurable
     protected $dates = array(
         '24h' => '[NOW-1DAY/HOUR TO *]',
@@ -60,7 +55,7 @@ class SolrQueryService
     private $topicService;
 
     /**
-     * Request object
+     * Request object.
      *
      * @var Symfony\Component\HttpFoundation\Request
      */
@@ -85,7 +80,7 @@ class SolrQueryService
     }
 
     /**
-     * Set request
+     * Set request.
      *
      * @param Request $request
      */
@@ -95,7 +90,7 @@ class SolrQueryService
     }
 
     /**
-     * Build solr date param
+     * Build solr date param.
      *
      * @return string
      */
@@ -123,12 +118,12 @@ class SolrQueryService
         }
 
         return sprintf('published:[%s TO %s]',
-            $fromDate === null ? '*' : $fromDate->format('Y-m-d\TH:i:s\Z') . '/DAY',
-            $toDate === null ? '*' : $toDate->format('Y-m-d\TH:i:s\Z') . '/DAY');
+            $fromDate === null ? '*' : $fromDate->format('Y-m-d\TH:i:s\Z').'/DAY',
+            $toDate === null ? '*' : $toDate->format('Y-m-d\TH:i:s\Z').'/DAY');
     }
 
     /**
-     * Build solr topic filter
+     * Build solr topic filter.
      *
      * @return string
      */
@@ -150,10 +145,10 @@ class SolrQueryService
 
         if (!empty($fieldValue)) {
             $fieldValue = (is_array($fieldValue)) ? $fieldValue : array($fieldValue);
-            array_walk($fieldValue, function(&$value) {
+            array_walk($fieldValue, function (&$value) {
                 $value = '"'.trim($value, '"').'"';
             });
-            $param =  sprintf('%s:(%s)', $fieldName, implode(',', $fieldValue));
+            $param = sprintf('%s:(%s)', $fieldName, implode(',', $fieldValue));
         }
 
         return $param;
@@ -172,7 +167,6 @@ class SolrQueryService
 
     public function decodeParameters(array $parameters)
     {
-
     }
 
     public function decodeResponse($response)
@@ -180,7 +174,6 @@ class SolrQueryService
         $decoded = json_decode($response, true);
 
         if ($this->helper->getConfigValue('index_type') == SolrHelperService::INDEX_AND_DATA && $this->request) {
-
             $decoded['responseHeader']['params']['q'] = $this->request->get('q'); // this might be modified, keep users query
             $decoded['responseHeader']['params']['date'] = $this->request->get('date');
             $decoded['responseHeader']['params']['type'] = $this->request->get('type');

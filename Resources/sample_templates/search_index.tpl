@@ -93,6 +93,8 @@
 
         {{ $fq = {{ build_solr_fq dateformat="d.m.Y" published=$smarty.get.published type=$fqtype from=$smarty.get.from to=$smarty.get.to }} }}
 
+        {{* You could also add "section_number" parameter to build_solr_fq function, to list results by section number (e.g. section_number=20) *}}
+
         {{ list_search_results_solr qf="title user message" q=$smarty.get.q fq=$fq rows=$listRows start=$listStart }}
 
             {{ if $gimme->current_list->at_beginning }}
