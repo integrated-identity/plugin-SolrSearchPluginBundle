@@ -1,13 +1,12 @@
 <?php
 /**
- * @package   Newscoop\SolrSearchPluginBundle
  * @author    Mischa Gorinskat <mischa.gorinskat@sourcefabric.org>
  * @copyright 2015 Sourcefabric o.p.s.
  * @license   http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
 /**
- * Builds the Solr FQ query
+ * Builds the Solr FQ query.
  *
  * Type:     function
  * Name:     build_solr_fq
@@ -16,12 +15,11 @@
  * @param array $p_params
  *
  * @return string $solrFq
- *      The Solr FQ requested
+ *                The Solr FQ requested
  *
  * @example
  *  {{ list_search_results_solr fq="{{ build_solr_fq }}" }}
  *  {{ list_search_results_solr fq="{{ build_solr_fq type=$smarty.post.type }}" }}
- *
  */
 function smarty_function_build_solr_fq($p_params = array(), &$p_smarty)
 {
@@ -34,7 +32,7 @@ function smarty_function_build_solr_fq($p_params = array(), &$p_smarty)
     foreach ($acceptedParams as $key) {
         if (array_key_exists($key, $p_params) && !empty($p_params[$key])) {
             $cleanParam[$key] = $p_params[$key];
-        } else if (array_key_exists($key, $_GET) && !empty($_GET[$key])) {
+        } elseif (array_key_exists($key, $_GET) && !empty($_GET[$key])) {
             $cleanParam[$key] = $_GET[$key];
         }
     }
@@ -92,12 +90,16 @@ function smarty_function_build_solr_fq($p_params = array(), &$p_smarty)
         }
     }
 
+    if (isset($solrFromDate) && isset($solrToDate) && $solrFromDate == $solrToDate) {
+        $solrToDate = date_format($toDate, 'Y-m-d').'T23:59:99.999Z/DAY';
+    }
+
     if (!empty($solrFromDate) && !empty($solrToDate)) {
-        $published = '['. $solrFromDate .' TO '. $solrToDate . ']';
-    } else if (!empty($solrFromDate)) {
-        $published = '['. $solrFromDate .' TO *]';
-    } else if (!empty($solrToDate)) {
-        $published = '[* TO '. $solrToDate .']';
+        $published = '['.$solrFromDate.' TO '.$solrToDate.']';
+    } elseif (!empty($solrFromDate)) {
+        $published = '['.$solrFromDate.' TO *]';
+    } elseif (!empty($solrToDate)) {
+        $published = '[* TO '.$solrToDate.']';
     }
 
     if (!empty($published)) {
@@ -105,7 +107,7 @@ function smarty_function_build_solr_fq($p_params = array(), &$p_smarty)
             $solrFq .= ' AND ';
         }
 
-        $solrFq .= 'published:' . $published;
+        $solrFq .= 'published:'.$published;
     }
 
     if (array_key_exists('section_number', $cleanParam) && !empty($cleanParam['section_number'])) {
@@ -122,5 +124,3 @@ function smarty_function_build_solr_fq($p_params = array(), &$p_smarty)
 
     return $solrFq;
 }
-
-?>
