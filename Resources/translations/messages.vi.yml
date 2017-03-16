@@ -1,0 +1,66 @@
+Plugins: null
+plugin:
+    name: null
+    error:
+        config: null
+        curl: null
+        solr_core: null
+        solr_core_read: null
+        solr_core_item: null
+        server_error: null
+        response_false: null
+    solr:
+        pagetitle: null
+        solr: null
+        menu:
+            main: null
+            settings: null
+            status: null
+        admin:
+            tabs:
+                status: null
+                settings: null
+                readme: null
+            button:
+                viewraw: null
+            table:
+                name: null
+                lastModified: null
+                numDocs: null
+                version: null
+                uptime: null
+                size: null
+            form:
+                label:
+                    enabled: null
+                    index_type: null
+                    index_only: null
+                    index_and_data: null
+                    host: null
+                    port: null
+                    default_core: null
+                    suffix_uri: null
+                    query_uri: null
+                    update_uri: null
+                    indexables: null
+                    indexable_item:
+                        indexer_article: null
+                        indexer_comment: null
+                        indexer_user: null
+                    article_types: null
+                    cron_interval: null
+                    cron_custom: null
+                    save: null
+                help_text:
+                    index_type: null
+                    port: null
+                    suffix_uri: null
+                    default_core: null
+                    cron_interval: null
+                    cron_custom: null
+                status:
+                    success: null
+        permissions:
+            label: null
+            settings: null
+            status: null
